@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cheapest Hotels</title>
+</head>
+<script type="text/javascript">
+    window.onload = function(){
+        document.getElementById('location').value = "YVR";
+        document.getElementById('check_in').value = getToday();
+    }
+
+    function getToday() {
+        var date = new Date();
+        var nowMonth = date.getMonth() + 1;
+        var strDate = date.getDate();
+        var seperator = "-";
+        if (nowMonth >= 1 && nowMonth <= 9) {
+            nowMonth = "0" + nowMonth;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var nowDate = date.getFullYear() + seperator + nowMonth + seperator + strDate;
+        return nowDate;
+    }
+
+    function searchHotels()
+    {
+
+        document.getElementById("result").innerHTML="";
+
+        xmlHttp=GetXmlHttpObject()
+
+        if (xmlHttp==null)
+        {
+            alert ("您的浏览器不支持AJAX！");
+            return;
+        }
+
+        var url="/api/hotels/search_cheapest?location="+search.location.value+"&check_in="+search.check_in.value;
+        xmlHttp.onreadystatechange=stateChanged;
+        xmlHttp.open("GET",url,true);
+        xmlHttp.send(null);
+    }
+
+    function stateChanged()
+    {
+        if (xmlHttp.readyState==4)
+        {
+            var resp=xmlHttp.responseText;
+            var result = JSON.stringify(JSON.parse(resp), null, 2);
+            document.getElementById("result").innerHTML= result;
+        }
+    }
+
+    function GetXmlHttpObject()
+    {
+        var xmlHttp=null;
+        try
+        {
+            // Firefox, Opera 8.0+, Safari
+            xmlHttp=new XMLHttpRequest();
+        }
+        catch (e)
+        {
+            // Internet Explorer
+            try
+            {
+                xmlHttp=new ActiveXObject("Msxml2.XMLHTTP");
+            }
+            catch (e)
+            {
+                xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+            }
+        }
+        return xmlHttp;
+    }
+
+
+
+</script>
+<body>
+<form name="search">
+    Airport:<input type="text" name="location" id="location" />
+    CheckIn Date:<input type="text" name="check_in" id="check_in" />
+    <button type="button" onclick="searchHotels()" >Seach Cheapest Hotels</button>
+
+</form>
+
+<pre id="result">
+
+</pre>
+
+</body>
+</html>
