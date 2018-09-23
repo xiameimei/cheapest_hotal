@@ -10,3 +10,7 @@ java -jar hotels.jar &
 ###visit http://localhost:9090/index.html 
 
 ###Enjoy it!
+
+##Setting up your development environment
+###1. create a spring boot application in your IDE
+###2. import src dir and pom.xml
