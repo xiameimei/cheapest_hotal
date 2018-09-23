@@ -12,5 +12,7 @@ java -jar hotels.jar &
 ###Enjoy it!
 
 ##Setting up your development environment
+
 ###1. create a spring boot application in your IDE
+
 ###2. import src dir and pom.xml
